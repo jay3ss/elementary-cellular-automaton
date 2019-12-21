@@ -35,37 +35,39 @@ def main(ruleset, rand, density):
     while running:
         events = pygame.event.get()
 
-        key = pygame.key.get_pressed()
-        # draw only is user presses spacebar
-        if key[pygame.K_SPACE]:
-            print('Drawing a new generation')
-            screen.fill(black)
-            cell_num = 0
-            for y in range(0, screen_width, square):
-                for x in range(0, screen_height, square):
-                    cell = ca.row[cell_num]
-                    if cell.state:
-                        screen.set_at((x, y), white)
-                        # screen.fill(white, (x, y, x+square, y+square))
-                        # pygame.draw.rect(screen, white, (x, y, x+square, y+square))
-                    else:
-                        screen.set_at((x, y), black)
-                        # screen.fill(black, (x, y, x+square, y+square))
-                        # pygame.draw.rect(screen, black, (x, y, x+square, y+square))
-                    cell_num += 1
-                pygame.display.update()
-                ca.generate()
-                cell_num = 0
-                # time.sleep(delay)
-                # update the display
-        # quit if the user presses the spacebar
-        if key[pygame.K_q]:
-            exit()
-        # exit loop if user clicks 'x'
         for event in pygame.event.get():
+            # exit loop if user clicks 'x'
             if event.type == pygame.QUIT:
                 pygame.image.save(screen, 'simulation.png')
                 running = False
+
+            elif event.type == pygame.KEYDOWN:
+                key = pygame.key.get_pressed()
+                # draw only is user presses spacebar
+                if key[pygame.K_SPACE]:
+                    print('Drawing a new generation')
+                    screen.fill(black)
+                    cell_num = 0
+                    for y in range(0, screen_width, square):
+                        for x in range(0, screen_height, square):
+                            cell = ca.row[cell_num]
+                            if cell.state:
+                                screen.set_at((x, y), white)
+                                # screen.fill(white, (x, y, x+square, y+square))
+                                # pygame.draw.rect(screen, white, (x, y, x+square, y+square))
+                            else:
+                                screen.set_at((x, y), black)
+                                # screen.fill(black, (x, y, x+square, y+square))
+                                # pygame.draw.rect(screen, black, (x, y, x+square, y+square))
+                            cell_num += 1
+                        pygame.display.update()
+                        ca.generate()
+                        cell_num = 0
+                        # time.sleep(delay)
+                        # update the display
+                # quit if the user presses the spacebar
+                if key[pygame.K_q]:
+                    exit()
         # update the display
         # pygame.display.flip()
 
